@@ -29,3 +29,38 @@ public:
         return longestConsecutive;
     }
 };
+
+// Optimal
+class Solution {
+public:
+    int longestConsecutive(vector<int>& nums) {
+        int n = nums.size();
+        if(n == 0)
+            return 0;
+        
+        int longest = 0;
+        unordered_set<int> st;
+        for(auto i : nums)
+            st.insert(i);
+
+        int longestConsecutive = 0;
+        
+        for(auto i : st)
+        {
+            if(st.find(i - 1) == st.end())
+            {
+                int cnt = 1;
+                int num = i;
+
+                while(st.find(num + 1) != st.end())
+                {
+                    cnt += 1;
+                    num += 1;
+                }
+
+                longestConsecutive = max(longestConsecutive, cnt);
+            }
+        }
+        return longestConsecutive;
+    }
+};
