@@ -33,3 +33,49 @@ public:
         return ans;
     } 
 };
+
+// Optimal
+class Solution {
+public:
+    void reverseString(string &s, int start, int end)
+    {
+        while(start < end){
+            swap(s[start++], s[end--]);
+        }
+    }
+    string reverseWords(string s) {
+        int n = s.size();
+        reverse(begin(s), end(s));
+        vector<string> words;
+        int start, end;
+        int i = 0, j = 0;
+
+        
+
+        while(j < n)
+        {
+            while(j < n && s[j] == ' '){
+                j += 1;
+            }
+
+            start = i;
+
+            while(j < n && s[j] != ' '){
+                s[i] = s[j];
+                j++;
+                i++;
+            }
+
+            end = i - 1;
+            reverseString(s, start, end);
+
+            if(j < n)
+                s[i++] = ' ';
+        }
+
+        if(i > 0 && s[i-1] == ' ')
+            i--;
+        
+        return s.substr(0, i);
+    } 
+};
