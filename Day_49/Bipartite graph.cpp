@@ -1,3 +1,4 @@
+// Using BFS
 class Solution{
 private:
     bool bfs(int node, vector<int> adj[], int color[])
@@ -44,6 +45,52 @@ public:
             if(color[i] == -1)
             {
                 if(!bfs(i, adj, color))
+                    return false;
+            }
+        }
+        return true;
+    }
+};
+
+
+// Using DFS
+class Solution{
+private:
+    bool dfs(int node, int col, vector<int> adj[], int color[])
+    {
+        color[node] = col;
+        for(auto &ngbr : adj[node])
+        {
+            if(color[ngbr] == -1)
+            {
+                if(!dfs(ngbr, !col, adj, color))
+                    return false;
+            }
+            else if(color[ngbr] == col)
+                return false;
+        }
+        return true;
+    }
+public:
+    bool isBipartite(int V, vector<vector<int>> edges)  {
+        int color[V];
+        for(int i = 0;i < V;i++)
+            color[i] = -1;
+        
+        vector<int> adj[V];
+        for(auto i : edges)
+        {
+            int u = i[0];
+            int v = i[1];
+            adj[u].push_back(v);
+            adj[v].push_back(u);
+        }
+
+        for(int i = 0;i < V;i++)
+        {
+            if(color[i] == -1)
+            {
+                if(!dfs(i, 0, adj, color))
                     return false;
             }
         }
