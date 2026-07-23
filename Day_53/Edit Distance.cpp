@@ -24,3 +24,33 @@ class Solution {
     }
 };
 
+// Memoization
+class Solution {
+  private:
+
+    int f(int i,int j,string &s1, string &s2, vector<vector<int>> &dp)
+    {
+        if(i < 0)
+            return j + 1;
+        if(j < 0)
+            return i + 1;
+        
+        if(dp[i][j] != -1)
+            return dp[i][j];
+        
+        if(s1[i] == s2[j])
+            return dp[i][j] = 0 + f(i-1,j-1,s1,s2,dp);
+        
+        return dp[i][j] = 1 + min({f(i-1,j-1,s1,s2,dp), f(i-1,j,s1,s2,dp), f(i,j-1,s1,s2,dp)});
+        
+    }
+    
+  public:
+    int editDistance(string start, string target) {
+        int n = start.size();
+        int m = target.size();
+        vector<vector<int>> dp(n,vector<int>(m,-1));
+        return f(n-1,m-1,start, target,dp);
+    }
+};
+
