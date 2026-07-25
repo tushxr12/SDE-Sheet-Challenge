@@ -1,0 +1,33 @@
+// Recursion
+
+class Solution {
+private:
+    int f(int i,int j, int cols, vector<vector<int>> &matrix)
+    {
+        if(j < 0 || j >= cols)
+            return 1e9;
+        
+        if(i == 0)
+            return matrix[i][j];
+        
+        int up = matrix[i][j] + f(i-1,j,cols,matrix);
+        int leftDiag = matrix[i][j] + f(i-1,j-1,cols,matrix);
+        int rightDiag = matrix[i][j] + f(i-1,j+1,cols,matrix);
+
+        return min({up, leftDiag, rightDiag});
+    }
+
+public:
+    int minFallingPathSum(vector<vector<int>>& matrix) {
+        int rows = matrix.size();
+        int cols = matrix[0].size();
+
+        int mini = INT_MAX;
+        for(int col = 0; col < cols;col++)
+        {
+            int ans = f(rows-1,col,cols,matrix);
+            mini = min(ans, mini);
+        }
+        return mini;
+    }
+};
