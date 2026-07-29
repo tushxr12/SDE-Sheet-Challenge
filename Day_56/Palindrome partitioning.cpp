@@ -1,5 +1,7 @@
+
 class Solution {
 public:
+    // Palindrome check
     bool isPalinndrome(string s, int left, int right)
     {
         while(left <= right)
@@ -18,6 +20,7 @@ public:
             return;
         }
 
+        // Try to partition all
         for(int i = index;i < s.size();i++)
         {
             if(isPalinndrome(s, index, i))
